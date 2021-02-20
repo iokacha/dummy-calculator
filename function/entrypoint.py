@@ -1,15 +1,14 @@
 import json
-from .calculator import Calculator, NonNumerical, UnitException
+from calculator import Calculator, NonNumerical, UnitException
 
 
 def sum(event, context):
-    calculator = Calculator()
-    body = json.loads(event.get("body"))
-    data1 = body.get("input1")
-    data2 = body.get("input2")
-    units = body.get("units", "Meters")
+    data1 = event.get("input1")
+    data2 = event.get("input2")
+    units = event.get("units", "Meters")
 
     try:
+        calculator = Calculator()
         result = calculator.sum(data1, data2, units)
         status = 200
     except (UnitException, NonNumerical) as e:

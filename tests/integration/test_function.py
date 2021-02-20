@@ -1,6 +1,6 @@
 import json
 import pytest
-from function import entrypoint
+from function.entrypoint import sum
 
 def api_gateway_event(body):
     return {
@@ -20,7 +20,7 @@ def api_gateway_event(body):
 
 def call_calculator_sum(request_body):
     body = api_gateway_event(json.dumps(request_body))
-    result = entrypoint.sum(body, "")
+    result = sum(body, "")
     return result
 
 def test_lambda_sum_standard(mocker):    
