@@ -3,9 +3,10 @@ from calculator import Calculator, NonNumerical, UnitException
 
 
 def sum(event, context):
-    data1 = event.get("input1")
-    data2 = event.get("input2")
-    units = event.get("units", "Meters")
+    data = json.loads(event.get("body"))
+    data1 = data.get("input1")
+    data2 = data.get("input2")
+    units = data.get("units", "Meters")
 
     try:
         calculator = Calculator()

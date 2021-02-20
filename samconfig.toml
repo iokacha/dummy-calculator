@@ -2,9 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "calculator"
-s3_bucket = "aws-sam-cli"
-s3_prefix = "calculator"
-region = "eu-central-1"
+stack_name = "sam-app"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-yo8802p0mejl"
+s3_prefix = "sam-app"
+region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
