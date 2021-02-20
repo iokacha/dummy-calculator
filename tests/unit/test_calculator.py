@@ -1,5 +1,6 @@
 import pytest
 from function.calculator import Calculator, Units
+from function.calculator import NonNumerical, UnitException
 
 def test_calculator_meter_and_integer_only():
     calculator = Calculator()
@@ -59,3 +60,19 @@ def test_calculator_with_custom_output_unit():
         "Milimeters"
     )
     assert result == "1005000 Milimeters"
+
+def test_calculator_with_invalid_units():
+    calculator = Calculator()
+    with pytest.raises(UnitException) as excinfo:
+        result = calculator.sum(
+            "3 invalid", 
+            "5 Meters",
+            "Milimeters"
+        )
+    with pytest.raises(NonNumerical) as excinfo:
+        result = calculator.sum(
+            "X Meters", 
+            "5 Meters",
+            "Milimeters"
+        )
+        print(excinfo)
