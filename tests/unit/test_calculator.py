@@ -37,3 +37,9 @@ def test_calculator_different_input_unit():
     )
     assert result == "0.008 Meters"
 
+    result = calculator.sum(
+        "1 Kilometers", 
+        "1 Meters",
+    )
+    assert result == "1001 Meters"
+
