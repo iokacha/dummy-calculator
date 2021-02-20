@@ -10,17 +10,21 @@ class Units(enum.Enum):
     Centimeters = Decimal("100")
     Milimeters  = Decimal("1000")
     
-    
 
 class Calculator:
 
     def sum(self, input1, input2, unit="Meters"):
         value1, value2 = self.prepare_in_meter(input1, input2, unit)
         result = Decimal(value1 + value2).normalize()
-        return f"{result} {unit}"
+        x = self.from_meter_to_unit(result, unit)
+        return f"{x} {unit}"
     
     def to_meter(self, value, unit):
         return value / Units[unit].value
+
+    def from_meter_to_unit(self, value, unit):
+        return value * Units[unit].value
+        
 
     def split(self, input):
         value, unit = input.split(" ")

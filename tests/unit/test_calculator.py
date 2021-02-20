@@ -43,3 +43,19 @@ def test_calculator_different_input_unit():
     )
     assert result == "1001 Meters"
 
+
+def test_calculator_with_custom_output_unit():
+    calculator = Calculator()
+    result = calculator.sum(
+        "3 Meters", 
+        "5 Meters",
+        "Milimeters"
+    )
+    assert result == "8000 Milimeters"
+
+    result = calculator.sum(
+        "1 Kilometers", 
+        "5 Meters",
+        "Milimeters"
+    )
+    assert result == "1005000 Milimeters"
