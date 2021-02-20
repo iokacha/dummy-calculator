@@ -1,6 +1,6 @@
 import json
 import pytest
-from function.entrypoint import sum
+from function.entrypoint import *
 
 def api_gateway_event(body):
     return {
@@ -52,3 +52,28 @@ def test_lambda_sum_standard_custom_output(mocker):
     response = json.loads(result.get("body"))
     assert response["result"] == "380 Decimeters"
     assert result["statusCode"] == 200
+
+
+def test_lambda_sum_empty_body(mocker):    
+    result = call_calculator_sum({})
+    response = json.loads(result.get("body"))
+    assert result["statusCode"] == 400
+    assert " Expecting 'Value Unit'" in response["result"]
+
+def test_lambda_sum_empty_inputs(mocker):    
+    result = call_calculator_sum({
+        "input1": "",
+        "input2": ""
+    })
+    response = json.loads(result.get("body"))
+    assert result["statusCode"] == 400
+    assert " Expecting 'Value Unit'" in response["result"]
+
+def test_lambda_sum_malformed_inputs(mocker):    
+    result = call_calculator_sum({
+        "input1": "1",
+        "input2": "Meters"
+    })
+    response = json.loads(result.get("body"))
+    assert result["statusCode"] == 400
+    assert " Expecting 'Value Unit'" in response["result"]

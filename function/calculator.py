@@ -15,6 +15,9 @@ class UnitException(Exception):
 
 class NonNumerical(Exception):
     pass
+class FormatException(Exception):
+    pass
+
 
 class Calculator:
 
@@ -31,13 +34,9 @@ class Calculator:
     def _from_meter_to_unit(self, value, unit):
         return value * Units[unit].value
         
-    def _split(self, input):
-        value, unit = input.split(" ")
-        return value, unit
-    
     def _prepare_in_meter(self, input1, input2, unit):
-        value1, unit1 = self._split(input1)
-        value2, unit2 = self._split(input2)
+        value1, unit1 = self._validate_format(input1)
+        value2, unit2 = self._validate_format(input2)
         # Input validation
         self._validate_unit(unit1)
         self._validate_unit(unit2)
@@ -62,4 +61,9 @@ class Calculator:
             raise NonNumerical(f"Exception at {value} : Invalid Numeric Value Exception")
 
 
-            
+    def _validate_format(self, input):        
+        try:
+            value, unit = input.split(" ")
+            return value, unit
+        except ValueError as e:
+            raise FormatException(f"Exception at {input} : Invalid Format Exception, Expecting 'Value Unit'")

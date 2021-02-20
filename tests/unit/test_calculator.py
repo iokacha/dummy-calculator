@@ -1,6 +1,6 @@
 import pytest
 from function.calculator import Calculator, Units
-from function.calculator import NonNumerical, UnitException
+from function.calculator import NonNumerical, UnitException, FormatException
 
 def test_calculator_meter_and_integer_only():
     calculator = Calculator()
@@ -77,3 +77,21 @@ def test_calculator_with_invalid_units():
             "Milimeters"
         )
     assert "X" in str(ex.value)
+
+def test_calculator_with_invalid_units():
+    calculator = Calculator()
+    with pytest.raises(FormatException) as ex:
+        result = calculator.sum(
+            "",
+            ""
+        )
+    assert "Expecting 'Value Unit'" in str(ex.value)    
+
+def test_calculator_with_invalid_units():
+    calculator = Calculator()
+    with pytest.raises(FormatException) as ex:
+        result = calculator.sum(
+            "1",
+            "Meter"
+        )
+    assert "Expecting 'Value Unit'" in str(ex.value)    
