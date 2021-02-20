@@ -42,4 +42,13 @@ def test_lambda_sum_with_invalid_unit(mocker):
     assert "AlienMeter" in response["result"]
     assert result["statusCode"] == 400
 
-    
+
+def test_lambda_sum_standard_custom_output(mocker):    
+    result = call_calculator_sum({
+        "input1": "18 Meters",
+        "input2": "20 Meters",
+        "units" : "Decimeters"
+    })
+    response = json.loads(result.get("body"))
+    assert response["result"] == "380 Decimeters"
+    assert result["statusCode"] == 200
