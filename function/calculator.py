@@ -14,26 +14,26 @@ class Units(enum.Enum):
 class Calculator:
 
     def sum(self, input1, input2, unit="Meters"):
-        value1, value2 = self.prepare_in_meter(input1, input2, unit)
-        result = Decimal(value1 + value2).normalize()
-        x = self.from_meter_to_unit(result, unit)
-        return f"{x} {unit}"
+        value1, value2 = self._prepare_in_meter(input1, input2, unit)
+        sumed_in_meter = Decimal(value1 + value2).normalize()
+        result = self._from_meter_to_unit(sumed_in_meter, unit)
+        return f"{result} {unit}"
     
-    def to_meter(self, value, unit):
+    # internal methods 
+    def _from_unit_to_meter(self, value, unit):
         return value / Units[unit].value
 
-    def from_meter_to_unit(self, value, unit):
+    def _from_meter_to_unit(self, value, unit):
         return value * Units[unit].value
         
-
-    def split(self, input):
+    def _split(self, input):
         value, unit = input.split(" ")
         return value, unit
     
-    def prepare_in_meter(self, input1, input2, unit):
-        value1, unit1 = self.split(input1)
-        value2, unit2 = self.split(input2)
+    def _prepare_in_meter(self, input1, input2, unit):
+        value1, unit1 = self._split(input1)
+        value2, unit2 = self._split(input2)
         
-        meter_value1 = self.to_meter(Decimal(value1), unit1)
-        meter_value2 = self.to_meter(Decimal(value2), unit2)
+        meter_value1 = self._from_unit_to_meter(Decimal(value1), unit1)
+        meter_value2 = self._from_unit_to_meter(Decimal(value2), unit2)
         return meter_value1, meter_value2
