@@ -63,16 +63,17 @@ def test_calculator_with_custom_output_unit():
 
 def test_calculator_with_invalid_units():
     calculator = Calculator()
-    with pytest.raises(UnitException) as excinfo:
+    with pytest.raises(UnitException) as ex:
         result = calculator.sum(
-            "3 invalid", 
+            "3 AlienMeter", 
             "5 Meters",
             "Milimeters"
         )
-    with pytest.raises(NonNumerical) as excinfo:
+    assert "AlienMeter" in str(ex.value)
+    with pytest.raises(NonNumerical) as ex:
         result = calculator.sum(
             "X Meters", 
             "5 Meters",
             "Milimeters"
         )
-        print(excinfo)
+    assert "X" in str(ex.value)

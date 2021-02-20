@@ -39,27 +39,27 @@ class Calculator:
         value1, unit1 = self._split(input1)
         value2, unit2 = self._split(input2)
         # Input validation
-        self._validate_units(unit1, unit2, unit)
-        self._validate_values(value1, value2)
+        self._validate_unit(unit1)
+        self._validate_unit(unit2)
+        self._validate_unit(unit)
+        self._validate_numeric(value1)
+        self._validate_numeric(value2)
         # conversion
         meter_value1 = self._from_unit_to_meter(decimal.Decimal(value1), unit1)
         meter_value2 = self._from_unit_to_meter(decimal.Decimal(value2), unit2)
         return meter_value1, meter_value2
 
-    def _validate_units(self, unit1, unit2, output_unit):        
+    def _validate_unit(self, unit):        
         try:
-            Units[unit1].value
-            Units[unit2].value
-            Units[output_unit].value
-        except KeyError:
-            raise UnitException()
+            Units[unit].value
+        except KeyError as e:
+            raise UnitException(f"Exception at {unit} : Invalid Metric Unit Exception")
     
-    def _validate_values(self, value1, value2):        
+    def _validate_numeric(self, value):        
         try:
-            decimal.Decimal(value1)
-            decimal.Decimal(value2)
+            decimal.Decimal(value)
         except decimal.InvalidOperation:
-            raise NonNumerical()
+            raise NonNumerical(f"Exception at {value} : Invalid Numeric Value Exception")
 
 
             
